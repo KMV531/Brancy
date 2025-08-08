@@ -36,7 +36,7 @@ const HeroSection = () => {
           <div className='w-1/2 bg-green-100' />
         </div>
 
-        <div className='relative z-10 flex flex-col lg:flex-row w-full h-full'>
+        <div className='relative z-10 flex flex-col lg:flex-row w-full h-full mt-10 lg:mt-20 lg:ml-16'>
           {/* Left content */}
           <div className='flex-1 flex items-center justify-center px-4 sm:px-8 md:px-14 lg:px-16 h-1/2 lg:h-full'>
             <div className='flex flex-col items-start justify-center space-y-6 sm:space-y-8 max-w-md relative w-full'>

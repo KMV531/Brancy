@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import BackToTop from '@/components/BackToTop'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -70,6 +71,7 @@ export default function RootLayout({
       <body className={`${poppins.className} antialiased`}>
         <Header />
         {children}
+        <BackToTop />
         <Footer />
       </body>
     </html>

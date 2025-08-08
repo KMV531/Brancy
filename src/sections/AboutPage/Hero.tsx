@@ -6,7 +6,7 @@ const AboutHeroSection = () => {
     <main className='bg-white'>
       <section className='relative w-full h-screen overflow-hidden'>
         {/* Foreground content */}
-        <div className='relative z-10 flex flex-col lg:flex-row items-center justify-center h-full'>
+        <div className='relative z-10 flex flex-col lg:flex-row items-center justify-center h-full lg:mt-28'>
           {/* Left content */}
           <div className='flex items-center justify-center px-4 sm:px-8 md:px-14 lg:px-16 h-1/2 lg:h-full'>
             <div className='flex flex-col items-start justify-center space-y-6 sm:space-y-8 max-w-md relative w-full'>
@@ -24,7 +24,7 @@ const AboutHeroSection = () => {
                   We, are Brancy
                 </h1>
               </div>
-              <h2 className='underline text-sm md:text-lg'>
+              <h2 className='underline text-sm md:text-lg text-blue-900'>
                 B&nbsp;e&nbsp;s&nbsp;t&nbsp;&nbsp;
                 c&nbsp;o&nbsp;s&nbsp;m&nbsp;e&nbsp;t&nbsp;i&nbsp;c&nbsp;s&nbsp;&nbsp;
                 p&nbsp;r&nbsp;o&nbsp;v&nbsp;i&nbsp;d&nbsp;e&nbsp;r
@@ -44,7 +44,7 @@ const AboutHeroSection = () => {
               alt='About hero image'
               width={1200}
               height={1200}
-              className='object-contain w-[80%] sm:w-[70%] md:w-[65%] lg:w-auto'
+              className='object-contain w-full sm:w-[70%] md:w-[65%] lg:w-[35rem]'
               priority
             />
           </div>

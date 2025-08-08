@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import React from 'react'
+import LogoSlider from './LogoSlider'
 
 const AboutSection = () => {
   return (
-    <main className='container mx-auto py-20 bg-white'>
-      <section className='flex flex-col space-y-16 items-center justify-center'>
+    <main className='container mx-auto pb-20 bg-white'>
+      <LogoSlider />
+      <section className='flex flex-col space-y-8 lg:space-y-16 items-center justify-center px-5 lg:px-0'>
         <div>
           <Image
             src={'/assets/about/about2.webp'}
             alt='About 2 hero image'
             width={1300}
             height={1300}
-            className='object-contain w-full h-full'
+            className='object-contain w-[80rem] h-full'
           />
         </div>
         <div className='flex flex-col space-y-3 items-center justify-center'>
