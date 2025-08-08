@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const ContactPage = () => {
   return (
-    <main className='pt-14 lg:pt-24'>
+    <main className='pt-14 lg:pt-24 bg-white'>
       <section className='w-full min-h-screen flex flex-col-reverse lg:flex-row items-center justify-center'>
         {/* Left Image - visible below form on small screens, left on large */}
         <div className='w-full lg:w-1/2 h-64 sm:h-80 md:h-96 lg:h-full'>
@@ -45,12 +45,12 @@ const ContactPage = () => {
                 <input
                   type='text'
                   placeholder='First Name'
-                  className='w-full px-4 py-3 border-b border-gray-300 focus:outline-none focus:border-b'
+                  className='w-full px-4 py-3 border-b border-gray-300 focus:outline-none focus:border-b text-gray-700'
                 />
                 <input
                   type='text'
                   placeholder='Last Name'
-                  className='w-full px-4 py-3 border-b border-gray-300 focus:outline-none focus:border-b'
+                  className='w-full px-4 py-3 border-b border-gray-300 focus:outline-none focus:border-b text-gray-700'
                 />
               </div>
 
@@ -58,20 +58,20 @@ const ContactPage = () => {
               <input
                 type='email'
                 placeholder='Email Address'
-                className='w-full px-4 py-3 border-b border-gray-300 focus:outline-none focus:border-b'
+                className='w-full px-4 py-3 border-b border-gray-300 focus:outline-none focus:border-b text-gray-700'
               />
 
               {/* Message */}
               <textarea
                 placeholder='Message'
                 rows={4}
-                className='w-full px-4 py-3 border-b border-gray-300 resize-none focus:outline-none focus:border-b'
+                className='w-full px-4 py-3 border-b border-gray-300 resize-none focus:outline-none focus:border-b text-gray-700'
               />
 
               {/* Submit Button */}
               <button
                 type='submit'
-                className='px-6 py-3 bg-pink-500 text-white hover:bg-pink-600 transition rounded-full tracking-widest cursor-pointer'
+                className='px-6 py-3 bg-pink-500 text-white hover:bg-pink-600 transition rounded-full tracking-widest cursor-pointer placeholder:text-gray-700'
               >
                 S&nbsp;U&nbsp;B&nbsp;M&nbsp;I&nbsp;T
               </button>

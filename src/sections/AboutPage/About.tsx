@@ -3,7 +3,7 @@ import React from 'react'
 
 const AboutSection = () => {
   return (
-    <main className='container mx-auto py-20'>
+    <main className='container mx-auto py-20 bg-white'>
       <section className='flex flex-col space-y-16 items-center justify-center'>
         <div>
           <Image

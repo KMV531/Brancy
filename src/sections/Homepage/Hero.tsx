@@ -79,7 +79,7 @@ const HeroSection = () => {
                 <Link
                   href='/shop'
                   aria-label='Go to shop page'
-                  className='border-2 border-gray-600 py-3 px-6 rounded-full text-sm sm:text-base tracking-wider self-start hover:bg-orange-400 hover:text-white transition-colors'
+                  className='text-gray-700 border-2 border-gray-600 py-3 px-6 rounded-full text-sm sm:text-base tracking-wider self-start hover:bg-orange-400 hover:text-white transition-colors'
                 >
                   B&nbsp;U&nbsp;Y&nbsp;&nbsp;N&nbsp;O&nbsp;W
                 </Link>

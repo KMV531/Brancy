@@ -55,7 +55,7 @@ const contactDetails = [
 
 const ContactInfo = () => {
   return (
-    <main className='container mx-auto px-5 py-10 max-w-6xl'>
+    <main className='container mx-auto px-5 py-10 max-w-6xl bg-white'>
       <section className='bg-orange-50 rounded-xl p-8'>
         <div className='flex flex-col lg:flex-row items-center justify-center text-center gap-16 text-sm md:text-lg text-black'>
           {contactDetails.map((item, index) => (

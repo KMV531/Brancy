@@ -19,7 +19,7 @@ const featuredImages = [
 
 const FeaturedSection = () => {
   return (
-    <main className='container mx-auto px-5 py-20'>
+    <main className='container mx-auto px-5 py-20 bg-white'>
       <section className='grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto'>
         {featuredImages.map((item, index) => (
           <Link

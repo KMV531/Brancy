@@ -3,7 +3,7 @@ import React from 'react'
 
 const AboutHeroSection = () => {
   return (
-    <main>
+    <main className='bg-white'>
       <section className='relative w-full h-screen overflow-hidden'>
         {/* Foreground content */}
         <div className='relative z-10 flex flex-col lg:flex-row items-center justify-center h-full'>

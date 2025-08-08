@@ -43,7 +43,7 @@ const categories = [
 
 const CategoriesSection = () => {
   return (
-    <main className='container mx-auto px-5 py-20'>
+    <main className='container mx-auto px-5 py-20 bg-white'>
       <section className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 justify-center gap-5 max-w-6xl mx-auto'>
         {categories.map((cat, idx) => (
           <Link

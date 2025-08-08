@@ -24,7 +24,7 @@ const stats = [
 
 const IntroSection = () => {
   return (
-    <main className='container mx-auto pb-20'>
+    <main className='container mx-auto pb-20 bg-white'>
       <section className='bg-pink-50 px-6 py-20 sm:px-10 lg:p-28 rounded-xl'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:max-w-6xl mx-auto'>
           {stats.map((item, index) => (
