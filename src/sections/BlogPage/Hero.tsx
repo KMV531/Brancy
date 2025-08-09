@@ -5,7 +5,7 @@ import React from "react";
 const BlogHero = () => {
   return (
     <main>
-      <section className="relative w-full h-screen overflow-hidden">
+      <section className="relative w-full h-[200px] lg:h-screen overflow-hidden">
         <div className="w-full h-[100px] bg-amber-50 text-gray-800 text-center flex items-center justify-center space-x-4 mt-20">
           <Link
             href={"/"}
