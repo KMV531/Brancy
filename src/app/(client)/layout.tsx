@@ -5,6 +5,7 @@ import Header from "@/components/(Header)/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -73,6 +74,7 @@ export default function RootLayout({
         <body className={`${poppins.className} antialiased`}>
           <Header />
           {children}
+             <Toaster position="bottom-right" richColors />
           <BackToTop />
           <Footer />
         </body>
