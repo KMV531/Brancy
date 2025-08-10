@@ -3,6 +3,7 @@ import OtherPostsServer from "@/sections/BlogPage/(OtherPosts)/OtherPostsServer"
 import CategoriesSection from "@/sections/Homepage/Categories";
 import FeaturedSection from "@/sections/Homepage/Featured";
 import HeroSection from "@/sections/Homepage/Hero";
+import TopSaleSection from "@/sections/Homepage/TopSaleSection";
 import React from "react";
 
 const HomePage = () => {
@@ -10,6 +11,7 @@ const HomePage = () => {
     <main>
       <HeroSection />
       <CategoriesSection />
+      <TopSaleSection />
       <FeaturedSection />
       <div className="flex flex-col items-center justify-center space-y-4">
         <h1 className="text-2xl md:text-4xl lg:text-6xl text-gray-700">

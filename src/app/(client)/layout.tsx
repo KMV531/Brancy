@@ -6,6 +6,10 @@ import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { SanityLive } from "@/sanity/lib/live";
+import { VisualEditing } from "next-sanity";
+import DisableDraftMode from "@/components/DisableDraftMode";
+import { draftMode } from "next/headers";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -59,24 +63,31 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <ClerkProvider dynamic>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <head>
           {/* ✅ Explicit link fallback (optional, Next will auto inject from metadata too) */}
           <link rel="icon" href="/assets/logo.webp" type="image/webp+xml" />
         </head>
         <body className={`${poppins.className} antialiased`}>
+           {(await draftMode()).isEnabled && (
+            <>
+              <DisableDraftMode />
+              <VisualEditing />
+            </>
+          )}
           <Header />
           {children}
              <Toaster position="bottom-right" richColors />
           <BackToTop />
           <Footer />
+          <SanityLive />
         </body>
       </html>
     </ClerkProvider>

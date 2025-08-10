@@ -46,3 +46,29 @@ export const BLOG_DETAIL_QUERY = (slug: string) =>
   }
 }
 `);
+
+export const PRODUCT_QUERY =
+  defineQuery(`*[_type == "product" && isNew == true]{
+  _id,
+  title,
+  "slug": slug.current,
+  mainImage,
+  price,
+  oldPrice,
+  rating,
+  reviewsCount,
+  isNew
+} | order(_createdAt desc)[0...6]`);
+
+export const ALL_PRODUCT_QUERY =
+  defineQuery(`*[_type == "product" && isNew == true]{
+  _id,
+  title,
+  "slug": slug.current,
+  mainImage,
+  price,
+  oldPrice,
+  rating,
+  reviewsCount,
+  isNew
+} | order(_createdAt desc)`);
