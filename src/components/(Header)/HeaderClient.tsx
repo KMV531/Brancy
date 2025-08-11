@@ -7,6 +7,7 @@ import { FaHamburger, FaSearch, FaShoppingBag } from "react-icons/fa";
 import Nav from "../Nav";
 import { Button } from "../ui/button";
 import UserAuthSection from "./UserAuthSection";
+import { useCartStore } from "@/store/useCartSTore";
 
 // 👇 Type des props reçues depuis le serveur
 type HeaderClientProps = {
@@ -17,6 +18,8 @@ const HeaderClient = ({ user }: HeaderClientProps) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const closeMobileNav = () => setMobileNavOpen(false);
+
+  const cartCount = useCartStore((state) => state.totalItems());
 
   return (
     <header className="absolute top-0 left-0 w-full z-50 bg-white/50 lg:bg-transparent">
@@ -51,7 +54,7 @@ const HeaderClient = ({ user }: HeaderClientProps) => {
               >
                 <FaShoppingBag size={20} />
                 <span className="absolute -top-1 -right-1 bg-brand-700 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  0
+                  {cartCount}
                 </span>
               </Button>
             </Link>

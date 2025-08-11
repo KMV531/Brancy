@@ -1,6 +1,12 @@
 import { client } from "../lib/client";
 import { sanityFetch } from "../lib/live";
-import { ALL_PRODUCT_QUERY, BLOG_DETAIL_QUERY, POST_QUERY, PRODUCT_QUERY } from "./query";
+import {
+  ALL_PRODUCT_QUERY,
+  BLOG_DETAIL_QUERY,
+  POST_QUERY,
+  PRODUCT_QUERY,
+  productBySlugQuery,
+} from "./query";
 
 export const getPost = async () => {
   try {
@@ -20,11 +26,15 @@ export async function fetchBlogDetail(slug: string) {
 }
 
 export async function getTopSaleProducts() {
-  const query = PRODUCT_QUERY
+  const query = PRODUCT_QUERY;
   return await client.fetch(query);
 }
 
 export async function getAllProducts() {
-  const query = ALL_PRODUCT_QUERY
+  const query = ALL_PRODUCT_QUERY;
   return await client.fetch(query);
+}
+
+export async function getProductBySlug(slug: string) {
+  return await client.fetch(productBySlugQuery, { slug });
 }

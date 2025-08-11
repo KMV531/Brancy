@@ -57,11 +57,11 @@ export const PRODUCT_QUERY =
   oldPrice,
   rating,
   reviewsCount,
-  isNew
+  isNew,
+  shippingInfo
 } | order(_createdAt desc)[0...6]`);
 
-export const ALL_PRODUCT_QUERY =
-  defineQuery(`*[_type == "product" && isNew == true]{
+export const ALL_PRODUCT_QUERY = defineQuery(`*[_type == "product"]{
   _id,
   title,
   "slug": slug.current,
@@ -70,5 +70,35 @@ export const ALL_PRODUCT_QUERY =
   oldPrice,
   rating,
   reviewsCount,
+  shippingInfo,
   isNew
 } | order(_createdAt desc)`);
+
+export const productBySlugQuery = defineQuery(`
+  *[_type == "product" && slug.current == $slug][0]{
+    _id,
+    title,
+    description,
+    price,
+    isNew,
+    shippingInfo,
+     mainImage,
+    variants[]{
+      label,
+      price,
+      extraInfo
+    },
+    specifications[]{
+      key,
+      value
+    },
+    "reviews": *[_type == "review" && references(^._id)] | order(_createdAt desc){
+      _id,
+      name,
+      email,
+      rating,
+      comment,
+      _createdAt
+    }
+  }
+`);
