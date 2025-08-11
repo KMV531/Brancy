@@ -1,9 +1,9 @@
-// store/cartStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface CartItem {
-  _id: string;
+  _id: string; // product id
+  variantLabel?: string; // variant identification
   title: string;
   price: number;
   quantity: number;
@@ -11,33 +11,62 @@ interface CartItem {
 }
 
 interface CartState {
-  items: CartItem[];
+  cart: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: string, variantLabel?: string) => void;
   clearCart: () => void;
+  updateQuantity: (
+    id: string,
+    variantLabel: string | undefined,
+    quantity: number
+  ) => void;
   totalItems: () => number;
+  totalPrice: () => number;
 }
 
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
-      items: [],
+      cart: [],
+
       addToCart: (item) => {
-        const items = get().items;
-        const existing = items.find((i) => i._id === item._id);
-        if (existing) {
-          existing.quantity += item.quantity;
+        const cart = get().cart;
+        const existingIndex = cart.findIndex(
+          (i) => i._id === item._id && i.variantLabel === item.variantLabel
+        );
+        if (existingIndex !== -1) {
+          cart[existingIndex].quantity += item.quantity;
         } else {
-          items.push(item);
+          cart.push(item);
         }
-        set({ items: [...items] });
+        set({ cart: [...cart] });
       },
-      removeFromCart: (id) => {
-        set({ items: get().items.filter((i) => i._id !== id) });
+
+      removeFromCart: (id, variantLabel) => {
+        set({
+          cart: get().cart.filter(
+            (i) => !(i._id === id && i.variantLabel === variantLabel)
+          ),
+        });
       },
-      clearCart: () => set({ items: [] }),
+
+      clearCart: () => set({ cart: [] }),
+
+      updateQuantity: (id, variantLabel, quantity) => {
+        if (quantity < 1) return;
+        const cart = get().cart.map((item) =>
+          item._id === id && item.variantLabel === variantLabel
+            ? { ...item, quantity }
+            : item
+        );
+        set({ cart });
+      },
+
       totalItems: () =>
-        get().items.reduce((acc, item) => acc + item.quantity, 0),
+        get().cart.reduce((acc, item) => acc + item.quantity, 0),
+
+      totalPrice: () =>
+        get().cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
     }),
     { name: "brancy" }
   )

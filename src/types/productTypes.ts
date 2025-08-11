@@ -24,6 +24,11 @@ export interface Product {
   rating?: number;
   shippingInfo?: string;
   reviewsCount?: number;
+  variants?: Variant[];
+  reviews?: Review[];
+  collection?: string;
+  specifications?: any[];
+  description?: string;
   price: number;
   oldPrice?: number;
 }

@@ -7,8 +7,9 @@ import { toast } from "sonner";
 import { urlFor } from "@/sanity/lib/image";
 import { useUser } from "@clerk/nextjs";
 import { useCartStore } from "@/store/useCartSTore";
+import { Product } from "@/types/productTypes";
 
-export default function ProductDetail({ product }: { product: any }) {
+export default function ProductDetail({ product }: { product: Product }) {
   const addToCart = useCartStore((state) => state.addToCart);
   const { user, isSignedIn } = useUser();
 
@@ -32,8 +33,9 @@ export default function ProductDetail({ product }: { product: any }) {
   const handleAddToCart = () => {
     addToCart({
       _id: product._id,
+      variantLabel: selectedVariant?.label || "default",
       title: product.title,
-      image: product.image,
+      image: urlFor(product.mainImage).url(),
       price: selectedVariant?.price || product.price,
       quantity,
     });
