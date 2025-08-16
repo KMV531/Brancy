@@ -50,7 +50,7 @@ interface CartItemProps {
   variantLabel?: string;
   price: number;
   quantity: number;
-  image: { asset?: { _ref?: string } }; // assuming you attach this;
+  image: string // assuming you attach this;
 }
 
 interface CheckoutPageProps {
