@@ -2,7 +2,7 @@
 
 import CheckoutDetail from "@/components/(Checkout)/CheckoutDetail";
 import CheckoutHero from "@/components/(Checkout)/Hero";
-import { useCartStore } from "@/store/useCartSTore";
+import { useCartStore } from "@/store/useCartStore";
 
 const CheckoutPage = () => {
   const cartItems = useCartStore((state) => state.cart);

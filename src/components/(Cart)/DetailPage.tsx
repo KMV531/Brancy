@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useCartStore } from "@/store/useCartSTore";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/useCartStore";
 
 export default function DetailPage() {
   const router = useRouter();

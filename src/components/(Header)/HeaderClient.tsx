@@ -7,7 +7,7 @@ import { FaHamburger, FaSearch, FaShoppingBag } from "react-icons/fa";
 import Nav from "../Nav";
 import { Button } from "../ui/button";
 import UserAuthSection from "./UserAuthSection";
-import { useCartStore } from "@/store/useCartSTore";
+import { useCartStore } from "@/store/useCartStore";
 
 // 👇 Type des props reçues depuis le serveur
 type HeaderClientProps = {
