@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCartStore } from "@/store/useCartStore";
 
 const countries = [
   "United Kingdom",
@@ -48,6 +49,7 @@ interface CartItemProps {
   variantLabel?: string;
   price: number;
   quantity: number;
+  image: string;
 }
 
 interface CheckoutPageProps {
@@ -59,6 +61,8 @@ export default function CheckoutDetail({
   cartItems,
   shippingCost,
 }: CheckoutPageProps) {
+  const clearCart = useCartStore((state) => state.clearCart);
+
   // Form state
   const [form, setForm] = useState({
     firstName: "",
@@ -78,6 +82,7 @@ export default function CheckoutDetail({
 
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0].id);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Handle input change
   const handleChange = (
@@ -111,21 +116,68 @@ export default function CheckoutDetail({
 
   const total = subtotal + shippingCost;
 
-  // Handle submit
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // **Trigger Tranzak payment**
+  const handleTranzakPayment = async () => {
     if (!isFormValid) {
       alert("Please fill in required fields and accept terms");
       return;
     }
-    // Proceed with order submission logic here
-    console.log("Order placed", { form, paymentMethod, cartItems, total });
+
+    setLoading(true);
+
+    try {
+      const payload = {
+        totalAmount: total,
+        paymentMethod,
+        customer: {
+          firstName: form.firstName,
+          lastName: form.lastName,
+          company: form.company,
+          email: form.email,
+          phone: form.phone,
+          address:
+            form.streetAddress1 +
+            (form.streetAddress2 ? `, ${form.streetAddress2}` : ""),
+          district: form.district,
+          country: form.country,
+          postcode: form.postcode,
+        },
+        cartItems: cartItems.map((item) => ({
+          _id: item._id,
+          title: item.title,
+          variantLabel: item.variantLabel,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        })),
+      };
+
+      const response = await fetch("/api/payment/initiate-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (data.paymentUrl) {
+        clearCart(); // clear cart immediately
+        window.location.href = data.paymentUrl; // redirect to payment page
+      } else {
+        alert("Payment initiation failed: " + (data.error || "Unknown error"));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while initiating payment.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* Left side: Billing details */}
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <h2 className="text-xl font-semibold mb-4">Billing details</h2>
 
         <div className="grid grid-cols-2 gap-4">
@@ -305,14 +357,15 @@ export default function CheckoutDetail({
           {/* Tranzak button */}
           <button
             type="button"
-            disabled={!isFormValid}
+            onClick={handleTranzakPayment}
+            disabled={!isFormValid || loading}
             className={`w-full py-3 rounded text-white font-semibold ${
               isFormValid
                 ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
           >
-            Place order via Tranzak
+            {loading ? "Processing..." : "Place order via Tranzak"}
           </button>
         </div>
       </form>
