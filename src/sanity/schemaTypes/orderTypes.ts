@@ -68,12 +68,17 @@ export const orderType = defineType({
           type: "object",
           fields: [
             defineField({
-              name: "title",
+              name: "_key",
+              title: "Product Key",
+              type: "string",
+            }),
+            defineField({
+              name: "name",
               title: "Product Name",
               type: "string",
             }),
             defineField({
-              name: "variantLabel",
+              name: "variant",
               title: "Variant Label",
               type: "string",
             }),
@@ -84,7 +89,7 @@ export const orderType = defineType({
               type: "number",
             }),
             defineField({
-              name: "image",
+              name: "productImage",
               title: "Image",
               type: "image",
               options: { hotspot: true },

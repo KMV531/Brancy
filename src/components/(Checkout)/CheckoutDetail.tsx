@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
+import { toast } from "sonner";
 
 const countries = [
   "United Kingdom",
@@ -49,7 +50,7 @@ interface CartItemProps {
   variantLabel?: string;
   price: number;
   quantity: number;
-  image: string;
+  image: { asset?: { _ref?: string } }; // assuming you attach this;
 }
 
 interface CheckoutPageProps {
@@ -119,7 +120,7 @@ export default function CheckoutDetail({
   // **Trigger Tranzak payment**
   const handleTranzakPayment = async () => {
     if (!isFormValid) {
-      alert("Please fill in required fields and accept terms");
+      toast.error("Please fill in required fields and accept terms");
       return;
     }
 
@@ -152,23 +153,41 @@ export default function CheckoutDetail({
         })),
       };
 
+      console.log("💡 Payload sent to initiate-payment:", payload);
+
+      const startTime = performance.now();
       const response = await fetch("/api/payment/initiate-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+      const endTime = performance.now();
+
+      console.log(
+        `⏱ API call duration: ${(endTime - startTime).toFixed(2)}ms`
+      );
+      console.log("📡 Response status:", response.status);
+      console.log("📡 Response headers:", [...response.headers.entries()]);
 
       const data = await response.json();
+      console.log("📦 Response JSON:", data);
 
       if (data.paymentUrl) {
-        clearCart(); // clear cart immediately
-        window.location.href = data.paymentUrl; // redirect to payment page
+        clearCart();
+        console.log("✅ Redirecting to payment page:", data.paymentUrl);
+        window.location.href = data.paymentUrl;
       } else {
-        alert("Payment initiation failed: " + (data.error || "Unknown error"));
+        console.error(
+          "❌ Payment initiation failed:",
+          data.error || "Unknown error"
+        );
+        toast.error(
+          "Payment initiation failed: " + (data.error || "Unknown error")
+        );
       }
     } catch (err) {
-      console.error(err);
-      alert("An error occurred while initiating payment.");
+      console.error("🚨 Network or code error during payment initiation:", err);
+      toast.error("An error occurred while initiating payment.");
     } finally {
       setLoading(false);
     }
