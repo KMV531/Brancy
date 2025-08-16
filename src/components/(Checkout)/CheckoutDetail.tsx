@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { toast } from "sonner";
+import { useUser } from "@clerk/nextjs";
 
 const countries = [
   "United Kingdom",
@@ -17,30 +18,6 @@ const districts = [
   "District 2",
   "District 3",
   // add more
-];
-
-const paymentMethods = [
-  {
-    id: "bank",
-    label: "Direct bank transfer",
-    description:
-      "Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.",
-  },
-  {
-    id: "check",
-    label: "Check payments",
-    description: "Pay by check upon delivery.",
-  },
-  {
-    id: "cod",
-    label: "Cash on delivery",
-    description: "Pay with cash upon delivery.",
-  },
-  {
-    id: "paypal",
-    label: "PayPal Express Checkout",
-    description: "",
-  },
 ];
 
 // Define prop types
@@ -63,6 +40,7 @@ export default function CheckoutDetail({
   shippingCost,
 }: CheckoutPageProps) {
   const clearCart = useCartStore((state) => state.clearCart);
+  const { user } = useUser();
 
   // Form state
   const [form, setForm] = useState({
@@ -78,10 +56,9 @@ export default function CheckoutDetail({
     district: "",
     postcode: "",
     phone: "",
-    email: "",
+    email: user?.primaryEmailAddress?.emailAddress || "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0].id);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -101,7 +78,6 @@ export default function CheckoutDetail({
     "streetAddress1",
     "city",
     "district",
-    "email",
   ];
 
   const isFormValid =
@@ -129,7 +105,6 @@ export default function CheckoutDetail({
     try {
       const payload = {
         totalAmount: total,
-        paymentMethod,
         customer: {
           firstName: form.firstName,
           lastName: form.lastName,
@@ -353,8 +328,8 @@ export default function CheckoutDetail({
             type="email"
             value={form.email}
             onChange={handleChange}
-            required
             className="w-full border p-2 rounded"
+            disabled
           />
         </div>
 
@@ -441,26 +416,6 @@ export default function CheckoutDetail({
             </tr>
           </tbody>
         </table>
-
-        {/* Payment methods */}
-        <div className="space-y-4 hidden">
-          {paymentMethods.map(({ id, label, description }) => (
-            <label key={id} className="block border p-3 rounded cursor-pointer">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value={id}
-                checked={paymentMethod === id}
-                onChange={() => setPaymentMethod(id)}
-                className="mr-2"
-              />
-              <span className="font-medium">{label}</span>
-              {description && (
-                <p className="text-xs text-gray-600 mt-1">{description}</p>
-              )}
-            </label>
-          ))}
-        </div>
 
         <div>
           <label className="inline-flex items-center space-x-2">

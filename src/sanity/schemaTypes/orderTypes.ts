@@ -15,7 +15,11 @@ export const orderType = defineType({
       title: "Merchant Transaction Reference",
       type: "string",
     }),
-    defineField({ name: "resourceId", title: "Resource ID", type: "string" }),
+    defineField({
+      name: "resourceId",
+      title: "Resource ID",
+      type: "string",
+    }),
     defineField({
       name: "partnerTransactionId",
       title: "Partner Transaction ID",
@@ -60,6 +64,56 @@ export const orderType = defineType({
       ],
     },
     defineField({
+      name: "payerName",
+      title: "Payer Name",
+      type: "string",
+    }),
+    defineField({
+      name: "payerAccountId",
+      title: "Payer Account ID",
+      type: "string",
+    }),
+    defineField({
+      name: "payerUserId",
+      title: "Payer User ID",
+      type: "string",
+    }),
+    defineField({
+      name: "payerNote",
+      title: "Payer Note",
+      type: "string",
+    }),
+    defineField({
+      name: "transactionTime",
+      title: "Transaction Time",
+      type: "datetime",
+    }),
+    defineField({
+      name: "createdAt",
+      title: "Created At",
+      type: "datetime",
+    }),
+    defineField({
+      name: "merchantAccountId",
+      title: "Merchant Account ID",
+      type: "string",
+    }),
+    defineField({
+      name: "merchantFee",
+      title: "Merchant Fee",
+      type: "number",
+    }),
+    defineField({
+      name: "netAmountReceived",
+      title: "Net Amount Received",
+      type: "number",
+    }),
+    defineField({
+      name: "receivingEntity",
+      title: "Receiving Entity Name",
+      type: "string",
+    }),
+    defineField({
       name: "items",
       title: "Ordered Items",
       type: "array",
@@ -67,11 +121,6 @@ export const orderType = defineType({
         {
           type: "object",
           fields: [
-            defineField({
-              name: "_key",
-              title: "Product Key",
-              type: "string",
-            }),
             defineField({
               name: "name",
               title: "Product Name",
@@ -103,21 +152,41 @@ export const orderType = defineType({
       title: "Order Status",
       type: "string",
       options: {
-        list: ["pending", "paid", "shipped", "delivered", "cancelled"],
+        list: [
+          {
+            title: "Pending",
+            value: "pending",
+          },
+          {
+            title: "Paid",
+            value: "paid",
+          },
+          {
+            title: "Shipped",
+            value: "shipped",
+          },
+          {
+            title: "Delivered",
+            value: "delivered",
+          },
+          {
+            title: "Cancelled",
+            value: "cancelled",
+          },
+        ],
       },
-      initialValue: "pending",
+      initialValue: "pending", // optional: sets default to 'pending' on order creation
     }),
-    defineField({ name: "createdAt", title: "Created At", type: "datetime" }),
   ],
   preview: {
     select: {
       title: "transactionRef",
-      subtitle: "customer.email",
+      subtitle: "clerkUserId",
     },
     prepare(selection) {
       return {
         title: selection.title,
-        subtitle: `Customer: ${selection.subtitle}`,
+        subtitle: `User ID: ${selection.subtitle}`,
       };
     },
   },

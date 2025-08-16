@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     const paymentPayload = {
       amount: body.totalAmount,
       currencyCode: "XAF",
-      description: "Purchase on MyStore",
+      description: "Purchase on Brancy",
       payerNote: `Order - ${body?.customer?.firstName} ${body?.customer?.lastName}`,
       customer: body.customer,
       cartItems: body.cartItems,
