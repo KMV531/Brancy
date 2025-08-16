@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { toast } from "sonner";
 import { useUser } from "@clerk/nextjs";
@@ -40,7 +40,7 @@ export default function CheckoutDetail({
   shippingCost,
 }: CheckoutPageProps) {
   const clearCart = useCartStore((state) => state.clearCart);
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   // Form state
   const [form, setForm] = useState({
@@ -62,6 +62,8 @@ export default function CheckoutDetail({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+
+
   // Handle input change
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -69,6 +71,15 @@ export default function CheckoutDetail({
     const { name, value } = e.target;
     setForm((f) => ({ ...f, [name]: value }));
   };
+
+      useEffect(() => {
+    if (isSignedIn && user) {
+      setForm((prev) => ({
+        ...prev,
+        email: user.primaryEmailAddress?.emailAddress || "",
+      }));
+    }
+  }, [isSignedIn, user]);
 
   // Basic validation for required fields
   const requiredFields = [
@@ -118,6 +129,7 @@ export default function CheckoutDetail({
           country: form.country,
           postcode: form.postcode,
         },
+        clerkUserId: user?.id ?? null,
         cartItems: cartItems.map((item) => ({
           _id: item._id,
           title: item.title,

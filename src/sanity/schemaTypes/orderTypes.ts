@@ -139,9 +139,11 @@ export const orderType = defineType({
             }),
             defineField({
               name: "productImage",
-              title: "Image",
+              title: "Product Image",
               type: "image",
-              options: { hotspot: true },
+              options: {
+                hotspot: true,
+              },
             }),
           ],
         },
