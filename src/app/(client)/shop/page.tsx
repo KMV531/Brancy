@@ -9,7 +9,11 @@ const ShopPage = () => {
     <main>
       <ShopHeroPage />
       <CategoriesSection />
-      <AllProducts />
+      <AllProducts
+        searchParams={{
+          page: undefined,
+        }}
+      />
       <SaleBanner />
     </main>
   );

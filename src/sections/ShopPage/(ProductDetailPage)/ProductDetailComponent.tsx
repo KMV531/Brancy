@@ -6,8 +6,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { urlFor } from "@/sanity/lib/image";
 import { useUser } from "@clerk/nextjs";
-import { useCartStore } from "@/store/useCartSTore";
 import { Product } from "@/types/productTypes";
+import { useCartStore } from "@/store/useCartStore";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const addToCart = useCartStore((state) => state.addToCart);
