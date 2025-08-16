@@ -43,10 +43,10 @@ export async function POST(request: NextRequest) {
 
     // Check if user purchased the product
     const purchaseCheckQuery = `
-      *[_type == "order" && userId == $userId && $productId in products[]->_id][0]{
-        _id
-      }
-    `;
+  *[_type == "order" && clerkUserId == $userId && $productId in items[].productId][0]{
+    _id
+  }
+`;
     const purchase = await client.fetch(purchaseCheckQuery, {
       userId,
       productId,

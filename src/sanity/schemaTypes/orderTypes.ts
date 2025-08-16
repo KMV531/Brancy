@@ -122,6 +122,11 @@ export const orderType = defineType({
           type: "object",
           fields: [
             defineField({
+              name: "productId",
+              title: "Product ID",
+              type: "string", // <-- store product._id here
+            }),
+            defineField({
               name: "name",
               title: "Product Name",
               type: "string",

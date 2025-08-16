@@ -128,6 +128,14 @@ export default function CheckoutDetail({
           postcode: form.postcode,
         },
         clerkUserId: user?.id ?? null,
+        cartItems: cartItems.map((item) => ({
+          productId: item._id,
+          name: item.title,
+          variant: item.variantLabel,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        })),
       };
 
       console.log("💡 Payload sent to initiate-payment:", payload);

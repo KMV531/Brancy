@@ -117,7 +117,7 @@ export async function POST(request: Request) {
       clerkUserId: body.clerkUserId || "", // 👈 Store it here
       customer: body.customer,
       items: body.cartItems.map((item) => ({
-        _key: `${item._id}`,
+        productId: item._id, // ✅ so review can check later
         name: item.title,
         variant: item.variantLabel,
         price: item.price,
