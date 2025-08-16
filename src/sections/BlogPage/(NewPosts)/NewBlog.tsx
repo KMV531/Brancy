@@ -1,6 +1,7 @@
 "use client";
 
 import { urlFor } from "@/sanity/lib/image";
+import { BlogPost } from "@/types/blogTypes";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +17,7 @@ const categoryBgClass = (categoryName: string) => {
   }
 };
 
-export default function NewBlogSectionClient({ posts }: { posts: any[] }) {
+export default function NewBlogSectionClient({ posts }: { posts: BlogPost[] }) {
   return (
     <main className="bg-white">
       <section className="max-w-6xl mx-auto pb-20 lg:py-20 px-5 lg:px-0">

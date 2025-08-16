@@ -171,26 +171,27 @@ export default defineType({
           type: "object",
           fields: [
             {
-              name: "userName",
-              title: "User Name",
-              type: "string",
-              description: "Name of the reviewer.",
-            },
-            {
               name: "userId",
               title: "User ID",
               type: "string",
               description: "Internal ID of the user (to verify purchases).",
             },
             {
-              name: "rating",
+              name: "reviewName",
+              title: "User Name",
+              type: "string",
+              description: "Name of the reviewer.",
+            },
+
+            {
+              name: "reviewRating",
               title: "Rating",
               type: "number",
               description: "Rating from 1 to 5 stars.",
               validation: (Rule) => Rule.min(1).max(5),
             },
             {
-              name: "comment",
+              name: "reviewComment",
               title: "Comment",
               type: "text",
               description: "Customer's feedback on the product.",

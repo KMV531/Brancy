@@ -2,9 +2,10 @@ import { Image } from "sanity";
 
 export type Review = {
   _key: string; // Sanity's key for array items
-  reviewerName: string;
-  rating: number; // 1–5 stars
-  comment: string;
+  userId: string;
+  reviewName: string;
+  reviewRating: number; // 1–5 stars
+  reviewComment: string;
   createdAt: string; // ISO date string
 };
 
@@ -13,6 +14,11 @@ export type Variant = {
   label?: string; // optional if product has sizes
   price: number;
   extraInfo: string;
+};
+
+export type Specifications = {
+  key: string;
+  value?: string; // optional if product has sizes
 };
 
 export interface Product {
@@ -27,7 +33,7 @@ export interface Product {
   variants?: Variant[];
   reviews?: Review[];
   collection?: string;
-  specifications?: any[];
+  specifications?: Specifications[];
   description?: string;
   price: number;
   oldPrice?: number;

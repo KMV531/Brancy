@@ -60,12 +60,12 @@ export async function POST(request: NextRequest) {
 
     // Prepare new review object
     const newReview = {
-      userName,
+      _key: crypto.randomUUID(), // required by your Review type
       userId,
-      email,
-      rating,
-      comment,
-      date: new Date().toISOString(),
+      reviewName: userName,
+      reviewRating: rating,
+      reviewComment: comment,
+      createdAt: new Date().toISOString(),
     };
 
     // Append review to product document

@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { urlFor } from "@/sanity/lib/image";
 import { useUser } from "@clerk/nextjs";
-import { Product } from "@/types/productTypes";
+import { Product, Review, Specifications, Variant } from "@/types/productTypes";
 import { useCartStore } from "@/store/useCartStore";
 
 export default function ProductDetail({ product }: { product: Product }) {
@@ -25,7 +25,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user && reviews.some((r: any) => r.userId === user.id)) {
+    if (user && reviews.some((r: Review) => r.userId === user.id)) {
       setHasReviewed(true);
     }
   }, [user, reviews]);
@@ -86,14 +86,15 @@ export default function ProductDetail({ product }: { product: Product }) {
       toast.success("Review submitted! Awaiting approval.");
 
       // Update local reviews state immediately
-      setReviews((prev: any) => [
+      setReviews((prev: Review[]) => [
         ...prev,
         {
+          _key: crypto.randomUUID(), // generate unique key
           userId: user.id,
-          userName: reviewName,
-          comment: reviewComment,
-          rating: reviewRating,
-          date: new Date().toISOString(),
+          reviewName, // ✅ matches Review type
+          reviewRating, // ✅ matches Review type
+          reviewComment, // ✅ matches Review type
+          createdAt: new Date().toISOString(), // ✅ matches Review type
         },
       ]);
 
@@ -144,7 +145,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
         {/* Variants */}
         <div className="space-y-2">
-          {product.variants?.map((variant: any, i: number) => (
+          {product.variants?.map((variant: Variant, i: number) => (
             <label key={i} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -203,7 +204,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           {/* Specifications Tab */}
           <TabsContent value="specs" className="p-4">
-            {product.specifications?.map((spec: any, i: number) => (
+            {product.specifications?.map((spec: Specifications, i: number) => (
               <p key={i}>
                 <strong>{spec.key}:</strong> {spec.value}
               </p>
@@ -215,11 +216,13 @@ export default function ProductDetail({ product }: { product: Product }) {
           <TabsContent value="reviews" className="p-4 space-y-6">
             {/* Existing Reviews */}
             {reviews.length ? (
-              reviews.map((review: any, i: number) => (
+              reviews.map((review: Review, i: number) => (
                 <div key={i} className="border p-3 rounded">
-                  <p className="font-semibold">{review.userName}</p>
-                  <p className="text-sm text-gray-500">{review.comment}</p>
-                  <p>Rating: {"⭐".repeat(review.rating)}</p>
+                  <p className="font-semibold">{review.reviewName}</p>
+                  <p className="text-sm text-gray-500">
+                    {review.reviewComment}
+                  </p>
+                  <p>Rating: {"⭐".repeat(review.reviewRating)}</p>
                 </div>
               ))
             ) : (
